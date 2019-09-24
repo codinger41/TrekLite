@@ -7,30 +7,23 @@ import styles from './styles'
 import { getHeight } from '../../utils/style'
 import { Entypo } from '@expo/vector-icons'
 import TrekkerCard from '../../components/TrekkerCard'
+import Input from '../../components/Inputs'
 
-const Home = ({  }) => {
+
+const Home = ({ navigation }: ScreenProp) => {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#F03955" />
+      {/* <Input placeholder="Current Location" /> */}
       <Map style={styles.container}>
       </Map>
-      <View style={styles.locations}>
-        <View style={styles.row}>
-          <Entypo name="location-pin" size={getHeight(25)} color="#F03955"  />
-          <TextInput
-            style={styles.input}
-            placeholder="Current Location"
-          />
-        </View>
-        <View style={styles.divider} />
-        <View style={styles.row2}>
-          <Entypo name="location" size={getHeight(25)} color="#F03955" />
-          <TextInput
-            style={styles.input}
-            placeholder="Destination"
-          />
-        </View>
-      </View>
+      <TouchableOpacity
+        style={styles.locations}
+        onPress={() => navigation.navigate('LocationSelect')}
+      >
+        <Entypo name="location" size={getHeight(25)} color="#F03955" />
+        <Text style={styles.selectDestination}>Select Destination</Text>
+      </TouchableOpacity>
       <Modalize alwaysOpen={getHeight(330)}>
         <Text style={styles.activeTrekkersTxt}>Active Trekkers near you</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
