@@ -31,12 +31,7 @@ const Home = ({  }) => {
           />
         </View>
       </View>
-      <Modalize
-        alwaysOpen={getHeight(190)}
-        HeaderComponent={() => (
-          <Text style={styles.modalHeader}>TrekLite</Text>
-        )}
-      >
+      <Modalize alwaysOpen={getHeight(330)}>
         <Text style={styles.activeTrekkersTxt}>Active Trekkers near you</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <TrekkerCard />
@@ -44,6 +39,25 @@ const Home = ({  }) => {
           <TrekkerCard />
           <TrekkerCard />
         </ScrollView>
+        <Text style={styles.activeTrekkersTxt}>Trip Details</Text>
+        <Text style={styles.tripDetailTitle}>
+          Destination:
+          {'  '}
+          <Text style={styles.tripDetailValue}>235 Ikorodu Road</Text>
+        </Text>
+        <Text style={styles.tripDetailTitle}>
+          Estimated Time (by foot):
+          {'  '}
+          <Text style={styles.tripDetailValue}>200mins</Text>
+        </Text>
+        <Text style={styles.tripDetailTitle}>
+          Distance:
+          {'  '}
+          <Text style={styles.tripDetailValue}>1km</Text>
+        </Text>
+        <TouchableOpacity style={styles.btn}>
+          <Text style={styles.btnText}>Confirm Trip</Text>
+        </TouchableOpacity>
       </Modalize>
     </View>
   )

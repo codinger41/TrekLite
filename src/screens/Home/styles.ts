@@ -91,7 +91,43 @@ const styles = StyleSheet.create({
     fontSize: getHeight(15),
     marginVertical: getHeight(10),
     fontFamily: 'ubuntu',
+    marginLeft: getWidth(20),
+  },
+  tripDetailValue: {
+    fontSize: getHeight(13),
+    marginVertical: getHeight(5),
+    fontFamily: 'ubuntu',
+    marginLeft: getWidth(20),
+    color: 'grey'
+  },
+  tripDetailTitle: {
+    fontSize: getHeight(13),
+    marginVertical: getHeight(5),
+    fontFamily: 'ubuntu',
     marginLeft: getWidth(20)
+  },
+  btn: {
+    alignSelf: 'center',
+    backgroundColor: '#F03955',
+    height: getHeight(45),
+    width: getWidth(330),
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    marginTop: getHeight(15),
+    borderRadius: getWidth(10),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  btnText: {
+    color: '#fff',
+    fontFamily: 'ubuntu'
   }
 });
 
