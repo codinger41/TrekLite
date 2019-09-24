@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add expo=font
+  /usr/local/bin/node /usr/local/bin/yarn add eact-native-modalize
 
 PATH: 
   /Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/olamilekanibrahim/Library/Android/sdk/platform-tools/
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/expo=font: Not found
+  Error: https://registry.yarnpkg.com/eact-native-modalize: Not found
       at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66255:18)
       at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:129397:22)
       at Request.emit (events.js:203:13)
@@ -41,7 +41,9 @@ npm manifest:
       "react": "16.8.3",
       "react-dom": "16.8.3",
       "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
+      "react-native-animatable": "^1.3.2",
       "react-native-gesture-handler": "~1.3.0",
+      "react-native-maps": "^0.25.0",
       "react-native-reanimated": "~1.2.0",
       "react-native-responsive-screen": "^1.3.0",
       "react-native-screens": "~1.0.0-alpha.23",
@@ -4305,6 +4307,13 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
     integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
   
+  react-native-animatable@^1.3.2:
+    version "1.3.2"
+    resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.3.2.tgz#4783ee1a73dc98815aef234ce6b819f80bfe7d80"
+    integrity sha512-rmah3KQ63ft8DxkzFUwJSuZeq+oSYwldoGF4DTOR5WM2WR5wiWLgBAtrAHlI3Di3by323uOR21s+MlqPcHz2Kw==
+    dependencies:
+      prop-types "^15.5.10"
+  
   react-native-branch@~3.0.1:
     version "3.0.1"
     resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-3.0.1.tgz#5b07b61cbd290168cd3c3662e017ebe0f356d2ca"
@@ -4318,6 +4327,11 @@ Lockfile:
       hoist-non-react-statics "^2.3.1"
       invariant "^2.2.2"
       prop-types "^15.5.10"
+  
+  react-native-maps@^0.25.0:
+    version "0.25.0"
+    resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.25.0.tgz#81bc51eb50e33811a9e1c345cc48869413ead67d"
+    integrity sha512-PFJuW1pt+HnnnN0m0OGk29RSvICFVkK/DScX6cUk0SuCSN2DAHx0y6y57lZyYXcYqU4J4usNpfxgp/ccjASDiw==
   
   react-native-reanimated@~1.2.0:
     version "1.2.0"

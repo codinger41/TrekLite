@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   locations: {
     backgroundColor: '#fff',
     height: getHeight(120),
-    width: getWidth(300),
+    width: getWidth(320),
     alignSelf: 'center',
     alignItems: 'center',
     position: 'absolute',
@@ -71,6 +71,28 @@ const styles = StyleSheet.create({
     fontSize: getHeight(16),
     fontFamily: 'ubuntu'
   },
+  bottom: {
+    position: 'absolute',
+    bottom: 0,
+    height: getHeight(300),
+    backgroundColor: '#fff',
+    width: '100%',
+    borderTopRightRadius: getHeight(130)
+  },
+  modalHeader: {
+    color: '#7a7980',
+    fontWeight: 'bold',
+    fontSize: getHeight(20),
+    marginVertical: getHeight(10),
+    fontFamily: 'ubuntu',
+    alignSelf: 'center'
+  },
+  activeTrekkersTxt: {
+    fontSize: getHeight(15),
+    marginVertical: getHeight(10),
+    fontFamily: 'ubuntu',
+    marginLeft: getWidth(20)
+  }
 });
 
 
