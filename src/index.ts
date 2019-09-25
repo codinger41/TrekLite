@@ -18,8 +18,7 @@ export default createAppContainer(createStackNavigator({
     }
   },
   LocationSelect,
-  
 }, {
   // headerMode: 'none',
-  initialRouteName: 'Home'
+  // initialRouteName: 'Home'
 }));

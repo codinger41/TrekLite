@@ -24,10 +24,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "host.exp.exponent",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.246260706348-3eajibjmd6ue9qkrranlrgenvokci2ec"
+        }
+      }
     },
     "android": {
-      "statusBarColor": "#F03955"
+      "package": "host.exp.exponent",
+      "googleServicesFile": "./google-services.json"
     }
   }
 }

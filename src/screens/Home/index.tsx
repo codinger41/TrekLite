@@ -9,7 +9,7 @@ import { Entypo } from '@expo/vector-icons'
 import TrekkerCard from '../../components/TrekkerCard'
 import Store from '../../contexts/Store'
 import { getDelta } from '../../utils/helpers'
-
+import TripActions from '../../components/TripActions'
 
 const Home = ({ navigation }: ScreenProp) => {
   const context: any = useContext(Store)
@@ -113,41 +113,7 @@ const Home = ({ navigation }: ScreenProp) => {
         <Entypo name="location" size={getHeight(25)} color="#F03955" />
         <Text style={styles.selectDestination}>Select Destination</Text>
       </TouchableOpacity>
-      <Modalize alwaysOpen={getHeight(330)}>
-        <Text style={styles.activeTrekkersTxt}>Active Trekkers near you</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <TrekkerCard />
-          <TrekkerCard />
-          <TrekkerCard />
-          <TrekkerCard />
-        </ScrollView>
-        <Text style={styles.activeTrekkersTxt}>Trip Details</Text>
-        {destination && (
-          <Text style={styles.tripDetailTitle}>
-            Destination:
-            {'  '}
-            <Text style={styles.tripDetailValue}>{destination.formatted_address}</Text>
-          </Text>
-        )}
-        {estimatedTime && (
-            <Text style={styles.tripDetailTitle}>
-              Estimated Time (by foot):
-              {'  '}
-              <Text style={styles.tripDetailValue}>{Math.round((estimatedTime * 60)) * 100 / 100} min</Text>
-            </Text>
-          )
-        }
-        {distance && (
-          <Text style={styles.tripDetailTitle}>
-            Distance:
-            {'  '}
-            <Text style={styles.tripDetailValue}>{Math.round(distance) * 100 / 100} km</Text>
-          </Text>
-        )}
-        <TouchableOpacity style={styles.btn}>
-          <Text style={styles.btnText}>Confirm Trip</Text>
-        </TouchableOpacity>
-      </Modalize>
+      <TripActions />
     </View>
   )
 }
