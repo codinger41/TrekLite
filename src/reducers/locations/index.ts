@@ -6,17 +6,14 @@ type actionType = {
   location: object
 }
 
-const LocationReducer = (state: object = initialState, action: actionType) => {
-  console.log({
-    text: 'reducer received',
-    action
-  })
-  console.log({ state })
+const LocationReducer = (state: any = initialState, action: actionType) => {
   switch (action.type) {
     case 'SET_CURRENT_LOCATION':
       return { ...state, currentLocation: action.location }
     case 'SET_DESTINATION':
       return { ...state, destination: action.location }
+    case 'SET_NEW_COORDINATE':
+          return { ...state, passedCoordinates: state.passedCoordinates.concat(action.location) }
     default:
       return state
   }

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import haversine from 'haversine'
 import { View, Text, TouchableOpacity, StatusBar } from 'react-native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import styles from './styles'
@@ -18,8 +19,8 @@ const SelectLocation = ({ navigation }: ScreenProp) => {
         placeholder='Enter Location'
         minLength={2}
         autoFocus={false}
-        onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
-          console.log('fired')
+        currentLocation={false}
+        onPress={(data, details = null) => {
           return setDestination(details)
         }}
         returnKeyType={'default'}
@@ -41,7 +42,6 @@ const SelectLocation = ({ navigation }: ScreenProp) => {
             color: '#1faadb'
           },
         }}
-        currentLocation={false}
         query={{
           // available options: https://developers.google.com/places/web-service/autocomplete
           key: 'AIzaSyCH6YIv4oA88bUTscQJZd1KqAml9pza4uw',
@@ -57,6 +57,19 @@ const SelectLocation = ({ navigation }: ScreenProp) => {
         activeOpacity={!locations.destination ? 1 : 0.5}
         onPress={() => {
           if (!locations.destination) return
+
+          const distance = haversine({
+            longitude: locations.currentLocation.longitude,
+            latitude: locations.currentLocation.latitude
+          }, {
+            longitude: locations.destination.geometry.location.lng,
+            latitude: locations.destination.geometry.location.lat
+          })
+
+          context.setTrip({
+            distance,
+            estimatedTime: distance / 4.8
+          })
           return navigation.goBack()
         }}
       >

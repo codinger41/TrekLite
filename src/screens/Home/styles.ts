@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   btn: {
     alignSelf: 'center',
     backgroundColor: '#F03955',
-    height: getHeight(45),
+    height: getHeight(55),
     width: getWidth(330),
     shadowColor: "#000",
     shadowOffset: {

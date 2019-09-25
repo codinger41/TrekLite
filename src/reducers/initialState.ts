@@ -1,7 +1,12 @@
 const initialState: object = {
   locations: {
-    currentLoacation: null,
-    destination: null
+    currentLocation: null,
+    destination: null,
+    passedCoordinates: []
+  },
+  trips: {
+    distance: null,
+    estimatedTime: null
   }
 }
 
