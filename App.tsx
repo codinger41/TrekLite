@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { StatusBar, View } from 'react-native';
+import React, { useEffect, useState, useReducer } from 'react'
+import { StatusBar, View } from 'react-native'
 import * as Font from 'expo-font'
 import Navigation from './src/'
+import Store from './src/contexts/Store'
+import combined from './src/reducers'
+import initialState from './src/reducers/initialState'
+import getActions from './src/actions'
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false)
+  const [state, dispatch] = useReducer(combined, initialState)
 
   useEffect(() => {
     Font.loadAsync({
@@ -15,9 +20,12 @@ export default function App() {
 
   if (!fontLoaded) return <View />
   return (
-    <React.Fragment>
+    <Store.Provider value={{
+      ...state,
+      ...getActions(dispatch)
+    }}>
       <StatusBar barStyle="light-content" backgroundColor="#F03955" />
       <Navigation />
-    </React.Fragment>
+    </Store.Provider>
   );
 }
