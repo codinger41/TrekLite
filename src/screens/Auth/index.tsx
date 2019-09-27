@@ -4,6 +4,7 @@ import * as Google from 'expo-google-app-auth'
 import { Mutation } from 'react-apollo'
 import * as Animated from 'react-native-animatable'
 import { AntDesign } from '@expo/vector-icons'
+import { LinearGradient as Gradient } from 'expo-linear-gradient'
 import { showMessage } from 'react-native-flash-message'
 import styles from './styles'
 import { getHeight } from '../../utils/style'
@@ -74,19 +75,18 @@ const Auth = ({ navigation }: ScreenProp) => {
       {(createUserAccount: Function, { data, loading, error }: any) => {
         return (
           <View style={styles.container}>
-            <Animated.View
+            <Gradient
               style={styles.top}
-              animation="slideInDown"
-              duration={500}
+              colors={['#6610f2', '#6f42c1']}
             >
               <Animated.Text
                 style={styles.logoTxt}
                 animation="slideInLeft"
                 duration={500}
               >
-                TrekLite
+                Otrek
               </Animated.Text>
-            </Animated.View>
+            </Gradient>
             <Text style={styles.signUpTxt}>Connect with other Trekkers!</Text>
             <TouchableOpacity
               style={styles.googlebtn}

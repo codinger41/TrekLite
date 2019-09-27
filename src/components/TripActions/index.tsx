@@ -29,7 +29,7 @@ const TripActions = ({}) => {
     if(currentLocation && !currentAddress) {
       Geocoder.from(currentLocation)
         .then(json => {
-          const location = json.results[0].formatted_address;
+          const location = json.results[0].formatted_address
           return setCurrentLocation({
             currentAddress: location
           })
@@ -44,24 +44,25 @@ const TripActions = ({}) => {
     }
   }, [currentLocation])
 
-
-
   return (
-    <Modalize alwaysOpen={getHeight(330)}>
+    <View
+      style={{
+        height: destination ? getHeight(330) : getHeight(300)
+      }}
+    >
       <Mutation mutation={CREATE_TRIP}>
         {(createUserAccount: Function, { data, loading, error }: any) => {
           if(loading) return <ActivityIndicator size="large" color="#000" style={{ marginTop: getHeight(100) }} />
 
           return (
             <React.Fragment>
-              <Text style={styles.activeTrekkersTxt}>Active Trekkers near you</Text>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <TrekkerCard />
-                <TrekkerCard />
-                <TrekkerCard />
-                <TrekkerCard />
-              </ScrollView>
+              {/* <Text style={styles.activeTrekkersTxt}>Active Trekkers near you</Text> */}
               <Text style={styles.activeTrekkersTxt}>Trip Details</Text>
+              {!destination && (
+                <Text style={styles.tripDetailValue}>
+                  Select a destination to start a trip.
+                </Text>
+              )}
               {destination && (
                 <Text style={styles.tripDetailTitle}>
                   Destination:
@@ -85,10 +86,14 @@ const TripActions = ({}) => {
                   </Text>
                 </Text>
               )}
+              <Text style={styles.activeTrekkersTxt}>Active Trekkers near you</Text>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <TrekkerCard />
+              </ScrollView>
               <TouchableOpacity
                 style={[
                   styles.btn,
-                  !(destination && !estimatedTime && distance && currentLocation) && { backgroundColor: 'lightgrey' }
+                  (!destination && !estimatedTime && !distance) && { backgroundColor: 'lightgrey' }
                 ]}
                 activeOpacity={!destination ? 1 : 0.5}
               >
@@ -98,7 +103,7 @@ const TripActions = ({}) => {
           )
         }}
       </Mutation>
-    </Modalize>
+    </View>
   )
 }
 

@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   activeTrekkersTxt: {
-    fontSize: getHeight(15),
+    fontSize: getHeight(17),
     marginVertical: getHeight(10),
     fontFamily: 'ubuntu',
     marginLeft: getWidth(20),
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: 'ubuntu',
   }
-});
+})
 
 
 export default styles
