@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react'
 import { View, Text, TouchableOpacity, StatusBar, ScrollView, Dimensions } from 'react-native'
 import Map, { MarkerAnimated, PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
 import MapViewDirections from 'react-native-maps-directions'
-import Modalize from 'react-native-modalize'
 import styles from './styles'
 import { getHeight } from '../../utils/style'
 import { Entypo } from '@expo/vector-icons'
@@ -100,12 +99,6 @@ const Home = ({ navigation }: ScreenProp) => {
               longitude: destination.geometry.location.lng,
             }}
             apikey={"AIzaSyCH6YIv4oA88bUTscQJZd1KqAml9pza4uw"}
-            onReady={result => {
-              // setTrip({
-              //   distance: Math.round(result.distance) * 100 / 100,
-              //   estimatedTime: result.duration
-              // })
-            }}
           />
         )}
       </Map>

@@ -2,14 +2,14 @@ import gql from 'graphql-tag'
 
 export const CREATE_TRIP = gql`
   mutation createTrip(
-    $distance: Float,
-    $destinationLatitude: Float,
-    $destinationLongitude: Float,
-    $startAddress: String,
-    $startLatitude: Float,
-    $startLongitude: Float,
-    $estimatedTime: String,
-    $destinationAddress: String
+    $distance: Float!,
+    $destinationLatitude: Float!,
+    $destinationLongitude: Float!,
+    $startAddress: String!,
+    $startLatitude: Float!,
+    $startLongitude: Float!,
+    $estimatedTime: String!,
+    $destinationAddress: String!
   ) {
     createTrip(
       distance: $distance,

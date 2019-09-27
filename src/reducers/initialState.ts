@@ -7,7 +7,9 @@ const initialState: object = {
   },
   trips: {
     distance: null,
-    estimatedTime: null
+    estimatedTime: null,
+    started: false,
+    currentTrip: null
   }
 }
 

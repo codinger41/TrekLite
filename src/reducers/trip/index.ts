@@ -9,7 +9,10 @@ type actionType = {
 const TripReducer = (state: any = initialState, action: actionType) => {
   switch (action.type) {
     case 'SET_NEW_TRIP':
-      return { ...state, distance: action.payload.distance, estimatedTime: action.payload.estimatedTime  }
+      return {
+        ...state,
+        ...action.payload
+      }
     default:
       return state
   }

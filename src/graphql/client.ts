@@ -16,7 +16,7 @@ const httpLink = createHttpLink({
 })
 
 const authMiddleware = setContext(async (req, { headers }) => {
-  const token = await AsyncStorage.getItem('authToken')
+  const token = await AsyncStorage.getItem('token')
   return {
     headers: {
       ...headers,
