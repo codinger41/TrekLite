@@ -1,6 +1,7 @@
 const initialState: object = {
   locations: {
     currentLocation: null,
+    currentAddress: null,
     destination: null,
     passedCoordinates: []
   },

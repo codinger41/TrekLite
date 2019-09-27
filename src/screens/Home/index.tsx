@@ -17,6 +17,7 @@ const Home = ({ navigation }: ScreenProp) => {
     locations: {
       currentLocation,
       destination,
+      currentAddress,
       passedCoordinates
     },
     trips: {
@@ -30,8 +31,10 @@ const Home = ({ navigation }: ScreenProp) => {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       setCurrentLocation({
-        longitude: position.coords.longitude,
-        latitude: position.coords.latitude
+        currentLocation: {
+          longitude: position.coords.longitude,
+          latitude: position.coords.latitude
+        }
       })
     })
     // navigator.geolocation.watchPosition(position => {
@@ -98,10 +101,10 @@ const Home = ({ navigation }: ScreenProp) => {
             }}
             apikey={"AIzaSyCH6YIv4oA88bUTscQJZd1KqAml9pza4uw"}
             onReady={result => {
-              setTrip({
-                distance: Math.round(result.distance) * 100 / 100,
-                estimatedTime: result.duration
-              })
+              // setTrip({
+              //   distance: Math.round(result.distance) * 100 / 100,
+              //   estimatedTime: result.duration
+              // })
             }}
           />
         )}
