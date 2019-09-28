@@ -14,10 +14,15 @@ export default createAppContainer(createStackNavigator({
   Home: {
     screen: Home,
     navigationOptions: {
-      header: null
+      header: null,
     }
   },
-  LocationSelect,
+  LocationSelect: {
+    screen: LocationSelect,
+    navigationOptions: {
+      title: 'Select Destination'
+    }
+  },
 }, {
   // headerMode: 'none',
   // initialRouteName: 'Home'

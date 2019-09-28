@@ -5,7 +5,7 @@ import { getHeight, getWidth } from '../../utils/style';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   top: {
     backgroundColor: '#F03955',
@@ -133,6 +133,13 @@ const styles = StyleSheet.create({
   btnText: {
     color: '#fff',
     fontFamily: 'ubuntu',
+  },
+  activityIndicator: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0
   }
 });
 

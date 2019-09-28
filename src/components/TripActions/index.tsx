@@ -57,7 +57,6 @@ const TripActions = ({}) => {
     >
       <Mutation mutation={CREATE_TRIP}>
         {(createTrip: Function, { data, loading, error }: any) => {
-          if(loading) return <ActivityIndicator size="large" color="#000" style={{ marginTop: getHeight(100) }} />
 
           return (
             <React.Fragment>
@@ -143,7 +142,10 @@ const TripActions = ({}) => {
                   }))
                 }}
               >
-                <Text style={styles.btnText}>Start Trip</Text>
+                {loading
+                  ? <ActivityIndicator size="large" color="#ffffff" />
+                  : <Text style={styles.btnText}>Start Trip</Text>
+                }
               </TouchableOpacity>
             </React.Fragment>
           )

@@ -84,7 +84,7 @@ const Auth = ({ navigation }: ScreenProp) => {
                 animation="slideInLeft"
                 duration={500}
               >
-                Otrek
+                TrekLite
               </Animated.Text>
             </Gradient>
             <Text style={styles.signUpTxt}>Connect with other Trekkers!</Text>
