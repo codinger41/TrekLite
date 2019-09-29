@@ -31,7 +31,7 @@ const Auth = ({ navigation }: ScreenProp) => {
     const {
       createUser: {
         token,
-        user: { id, fullname }
+        user: { id, fullname, profilePhoto }
       }
     }: any = data
     return AsyncStorage.setItem('token', token).then(() =>
@@ -39,7 +39,8 @@ const Auth = ({ navigation }: ScreenProp) => {
         'user',
         JSON.stringify({
           id,
-          fullname
+          fullname,
+          profilePhoto
         })
       )
     )

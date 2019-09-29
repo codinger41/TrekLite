@@ -24,7 +24,8 @@ const TripActions = ({}) => {
     locations: { currentLocation, destination, currentAddress },
     trips: { distance, estimatedTime },
     setCurrentLocation,
-    setTrip
+    setTrip,
+    trekkers: { activeTrekkers }
   } = context
 
   useEffect(() => {
@@ -95,7 +96,10 @@ const TripActions = ({}) => {
                     Active Trekkers near you
                   </Text>
                   <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    <TrekkerCard />
+                    {activeTrekkers &&
+                      activeTrekkers.map(trekker => {
+                        return <TrekkerCard key={trekker.id} {...trekker} />
+                      })}
                   </ScrollView>
                 </React.Fragment>
               )}
