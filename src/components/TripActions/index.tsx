@@ -39,13 +39,6 @@ const TripActions = ({}) => {
             currentAddress: location
           })
         })
-        .catch(error => showMessage({
-          type: 'danger',
-          message: {
-            message: 'Network Error!',
-            description: 'Please check your internet connection'
-          }
-        }))
     }
   }, [currentLocation])
 

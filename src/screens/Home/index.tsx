@@ -10,6 +10,7 @@ import { GET_ACTIVE_TRIP } from '../../graphql/queries/trips'
 import Store from '../../contexts/Store'
 import { getDelta } from '../../utils/helpers'
 import TripActions from '../../components/TripActions'
+import CurrentActiveTrip from '../../components/currentTrip'
 import { showMessage as displayMessage } from 'react-native-flash-message'
 
 const showMessage: any = displayMessage
@@ -60,21 +61,27 @@ const Home = ({ navigation }: ScreenProp) => {
 
   return (
     <View style={styles.container}>
-      <Query query={GET_ACTIVE_TRIP}>
-      {({ data, loading, error, fetchMore, refetch }: any) => {
+      <Query
+        query={GET_ACTIVE_TRIP}
+        fetchPolicy="network-only"
+      >
+      {({ data, loading, error }: any) => {
 
         if(loading) return <ActivityIndicator color="#000" style={styles.activityIndicator}  />
 
-        if(data.getUserActiveTrip && !currentTrip) {
-          setTrip({
-            currentTrip: data.getUserActiveTrip
-          })
+        if(!error && data.getUserActiveTrip && !currentTrip) {
+          if(data.getUserActiveTrip.status !== 'ended') {
+            setTrip({
+              currentTrip: data.getUserActiveTrip
+            })
+          }
         }
         if(error) {
           showMessage({
             type: 'danger',
-            mmessage: 'Network Error!',
-            description: 'Please check your internet connection'
+            message: 'Network Error!',
+            description: 'Please check your internet connection',
+            duration: 5000
           })
         }
         return (
@@ -112,27 +119,38 @@ const Home = ({ navigation }: ScreenProp) => {
                   title='Your current location'
                 />
               )}
-              {destination && (
+              {(destination || currentTrip) && (
                 <MapViewDirections
                   origin={currentLocation}
                   mode="WALKING"
                   strokeWidth={5}
-                  destination={{
-                    latitude: destination.geometry.location.lat,
-                    longitude: destination.geometry.location.lng,
+                  destination={
+                    destination ? {
+                      latitude: destination.geometry.location.lat,
+                      longitude: destination.geometry.location.lng,
+                    } : {
+                      latitude: currentTrip.destinationLatitude,
+                      longitude: currentTrip.destinationLongitude
                   }}
                   apikey={"AIzaSyCH6YIv4oA88bUTscQJZd1KqAml9pza4uw"}
                 />
                 )}
               </Map>
-              <TouchableOpacity
-                style={styles.locations}
-                onPress={() => navigation.navigate('LocationSelect')}
-              >
-                <Entypo name="location" size={getHeight(25)} color="#F03955" />
-                <Text style={styles.selectDestination}>Select Destination</Text>
-              </TouchableOpacity>
-              <TripActions />
+              {!currentTrip && (
+                <React.Fragment>
+                  <TouchableOpacity
+                    style={styles.locations}
+                    onPress={() => navigation.navigate('LocationSelect')}
+                  >
+                    <Entypo name="location" size={getHeight(25)} color="#F03955" />
+                    <Text style={styles.selectDestination}>Select Destination</Text>
+                  </TouchableOpacity>
+                  <TripActions />
+                </React.Fragment>
+              )}
+              {currentTrip && (
+                <CurrentActiveTrip />
+              )}
             </React.Fragment>
             )
           }}

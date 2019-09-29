@@ -35,3 +35,34 @@ export const CREATE_TRIP = gql`
     }
   }
 `
+
+
+export const END_TRIP = gql`
+  mutation createTrip(
+    $tripId: Int!
+  ) {
+    endTrip(
+      tripId: $tripId
+    ) {
+      trip {
+        id
+        distance
+        destinationAddress
+        destinationLatitude
+        status
+        destinationLongitude
+        startAddress
+        startLatitude
+        startLongitude
+        estimatedTime
+      }
+    }
+  }
+`
+
+
+
+
+
+
+

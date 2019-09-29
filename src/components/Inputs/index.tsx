@@ -16,7 +16,6 @@ const Input = ({ placeholder }: InputProps) => {
       minLength={2}
       autoFocus={false}
       onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
-        console.log(data, details);
       }}
       returnKeyType={'default'}
       fetchDetails={true}

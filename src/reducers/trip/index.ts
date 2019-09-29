@@ -8,7 +8,7 @@ type actionType = {
 
 const TripReducer = (state: any = initialState, action: actionType) => {
   switch (action.type) {
-    case 'SET_NEW_TRIP':
+    case 'SET_TRIPS':
       return {
         ...state,
         ...action.payload

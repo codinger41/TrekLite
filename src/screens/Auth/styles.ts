@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   googlebtn: {
     alignSelf: 'center',
     backgroundColor: '#fff',
-    height: getHeight(40),
+    height: getHeight(50),
     width: getWidth(300),
     shadowColor: "#000",
     shadowOffset: {
