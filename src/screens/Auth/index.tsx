@@ -23,8 +23,14 @@ const Auth = ({ navigation }: ScreenProp) => {
   })
 
   const completeAuth = (data: object) => {
-    const { createUser: { token, user } }: any = data
+    const { createUser: { token, user: { id, fullname } } }: any = data
     return AsyncStorage.setItem('token', token)
+      .then(() => AsyncStorage.setItem('user',
+        JSON.stringify({
+          id,
+          fullname
+        })
+      ))
   }
 
   const initializeGoogleLogin = async (createAccount: Function) => {

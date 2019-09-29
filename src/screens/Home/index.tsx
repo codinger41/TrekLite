@@ -1,22 +1,38 @@
-import React, { useContext, useEffect } from 'react'
-import { View, Text, TouchableOpacity, StatusBar, ScrollView, Dimensions, ActivityIndicator } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
+import { View, Text, TouchableOpacity, StatusBar, ActivityIndicator, AsyncStorage } from 'react-native'
 import Map, { MarkerAnimated, PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
 import { Query } from 'react-apollo'
+import { Entypo } from '@expo/vector-icons'
+import PubNub from 'pubnub'
 import MapViewDirections from 'react-native-maps-directions'
+import { showMessage as displayMessage } from 'react-native-flash-message'
 import styles from './styles'
 import { getHeight } from '../../utils/style'
-import { Entypo } from '@expo/vector-icons'
 import { GET_ACTIVE_TRIP } from '../../graphql/queries/trips'
 import Store from '../../contexts/Store'
 import { getDelta } from '../../utils/helpers'
 import TripActions from '../../components/TripActions'
 import CurrentActiveTrip from '../../components/currentTrip'
-import { showMessage as displayMessage } from 'react-native-flash-message'
+
 
 const showMessage: any = displayMessage
 
+
+const getUserData = async () => {
+  const user = await AsyncStorage.getItem('user')
+  return JSON.parse(user)
+}
+
 const Home = ({ navigation }: ScreenProp) => {
+
+  const pubnub = new PubNub({
+    publishKey: 'pub-c-eb5c4104-ca7a-4538-b17f-b8b5b2924166',
+    subscribeKey: 'sub-c-3fa20908-e29e-11e9-89da-5a5bbf30aaae'
+  })
+
   const context: any = useContext(Store)
+  const [response, setResponse] = useState(0)
+
   const {
     locations: {
       currentLocation,
@@ -34,6 +50,8 @@ const Home = ({ navigation }: ScreenProp) => {
   } = context
 
   useEffect(() => {
+    
+
     navigator.geolocation.getCurrentPosition((position) => {
       setCurrentLocation({
         currentLocation: {
@@ -42,6 +60,27 @@ const Home = ({ navigation }: ScreenProp) => {
         }
       })
     })
+    pubnub.addListener({
+      status: function(statusEvent) {
+        console.log({ statusEvent })
+      },
+      message: function({ message }) {
+        console.log({ message })
+      }
+    })
+    pubnub.subscribe({
+      channels: ['trekkers']
+    })
+
+    getUserData()
+      .then((data) => {
+        console.log(data)
+        pubnub.publish({
+          message: data,
+          channel: 'trekkers'
+        })
+      })
+
     // navigator.geolocation.watchPosition(position => {
     //   const { latitude, longitude } = position.coords;
     //   setPassedCoordinates({
@@ -49,6 +88,9 @@ const Home = ({ navigation }: ScreenProp) => {
     //     latitude
     //   })
     // })
+    return () => {
+      pubnub.removeListener()
+    }
   }, [destination])
 
 
