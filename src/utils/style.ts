@@ -1,4 +1,3 @@
-  
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp

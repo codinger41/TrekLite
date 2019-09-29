@@ -1,6 +1,5 @@
 import initialState from '../initialState'
 
-
 type actionType = {
   type: string
   location: object
@@ -16,7 +15,10 @@ const LocationReducer = (state: any = initialState, action: actionType) => {
     case 'SET_DESTINATION':
       return { ...state, destination: action.location }
     case 'SET_NEW_COORDINATE':
-          return { ...state, passedCoordinates: state.passedCoordinates.concat(action.location) }
+      return {
+        ...state,
+        passedCoordinates: state.passedCoordinates.concat(action.location)
+      }
     default:
       return state
   }

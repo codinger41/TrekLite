@@ -1,5 +1,11 @@
 import React, { useContext, useEffect } from 'react'
-import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator} from 'react-native'
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator
+} from 'react-native'
 import { Mutation } from 'react-apollo'
 import haversine from 'haversine'
 import { showMessage as displayMessage } from 'react-native-flash-message'
@@ -10,29 +16,19 @@ import TrekkerCard from '../../components/TrekkerCard'
 import Store from '../../contexts/Store'
 import Geocoder from '../../utils/geocoder'
 
-
 const showMessage: any = displayMessage
-
 
 const TripActions = ({}) => {
   const context: any = useContext(Store)
   const {
-    locations: {
-      currentLocation,
-      destination,
-      currentAddress
-    },
-    trips: {
-      distance,
-      estimatedTime,
-      currentTrip
-    },
+    locations: { currentLocation, destination, currentAddress },
+    trips: { distance, estimatedTime, currentTrip },
     setCurrentLocation,
     setTrip
   } = context
 
   const getDistance = (): number => {
-    if(currentTrip) {
+    if (currentTrip) {
       const {
         destinationAddress,
         destinationLatitude,
@@ -42,20 +38,23 @@ const TripActions = ({}) => {
         startLongitude,
         estimatedTime
       } = currentTrip
-      
-      return haversine({
-        longitude: startLongitude,
-        latitude: startLatitude
-      }, {
-        longitude: destinationLongitude,
-        latitude: destinationLatitude
-      })
+
+      return haversine(
+        {
+          longitude: startLongitude,
+          latitude: startLatitude
+        },
+        {
+          longitude: destinationLongitude,
+          latitude: destinationLatitude
+        }
+      )
     }
   }
-  
+
   const getTime = (): number => {
     if (currentTrip && getDistance()) {
-      return Math.round(((getDistance() / 4.8) * 60)) * 100 / 100
+      return (Math.round((getDistance() / 4.8) * 60) * 100) / 100
     }
   }
 
@@ -67,7 +66,6 @@ const TripActions = ({}) => {
     >
       <Mutation mutation={END_TRIP}>
         {(endTrip: Function, { data, loading, error }: any) => {
-
           return (
             <React.Fragment>
               <Text style={styles.activeTrekkersTxt}>You're on a trip!</Text>
@@ -75,9 +73,7 @@ const TripActions = ({}) => {
                 <View style={styles.card2}>
                   <View style={styles.dot} />
                   <View style={styles.column}>
-                    <Text style={styles.tripDetailTitle}>
-                      Start Location
-                    </Text>
+                    <Text style={styles.tripDetailTitle}>Start Location</Text>
                     {currentTrip && (
                       <Text numberOfLines={1} style={styles.tripDetailValue}>
                         {currentTrip.startAddress}
@@ -86,7 +82,7 @@ const TripActions = ({}) => {
                   </View>
                 </View>
                 <View style={styles.card2}>
-                <View style={styles.dot} />
+                  <View style={styles.dot} />
                   <View style={styles.column}>
                     <Text style={styles.tripDetailTitle}>
                       Destination Address
@@ -100,9 +96,7 @@ const TripActions = ({}) => {
                 </View>
                 <View style={styles.row}>
                   <View style={styles.card3}>
-                    <Text style={styles.tripDetailTitle}>
-                      Distance left
-                    </Text>
+                    <Text style={styles.tripDetailTitle}>Distance left</Text>
                     {currentTrip && (
                       <Text numberOfLines={1} style={styles.tripDetailValue}>
                         {parseFloat(getDistance().toFixed(2))} km
@@ -122,9 +116,7 @@ const TripActions = ({}) => {
                 </View>
               </View>
               <TouchableOpacity
-                style={[
-                  styles.btn
-                ]}
+                style={[styles.btn]}
                 activeOpacity={!destination ? 1 : 0.5}
                 onPress={() => {
                   return endTrip({
@@ -132,27 +124,30 @@ const TripActions = ({}) => {
                       tripId: Number(currentTrip.id)
                     }
                   })
-                  .then(res => {
-                    showMessage({
-                      type: 'success',
-                      message: "Trip Ended Successfully!",
-                      description: 'Hope you enjoyed the trek!'
+                    .then(res => {
+                      showMessage({
+                        type: 'success',
+                        message: 'Trip Ended Successfully!',
+                        description: 'Hope you enjoyed the trek!'
+                      })
+                      return setTrip({
+                        currentTrip: null
+                      })
                     })
-                    return setTrip({
-                      currentTrip: null
-                    })
-                  })
-                  .catch(err => showMessage({
-                    type: 'danger',
-                    message: err.message,
-                    description: err.message
-                  }))
+                    .catch(err =>
+                      showMessage({
+                        type: 'danger',
+                        message: err.message,
+                        description: err.message
+                      })
+                    )
                 }}
               >
-                {loading
-                  ? <ActivityIndicator size="large" color="#ffffff" />
-                  : <Text style={styles.btnText}>End Trip</Text>
-                }
+                {loading ? (
+                  <ActivityIndicator size="large" color="#ffffff" />
+                ) : (
+                  <Text style={styles.btnText}>End Trip</Text>
+                )}
               </TouchableOpacity>
             </React.Fragment>
           )

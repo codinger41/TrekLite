@@ -1,5 +1,11 @@
 import React, { useContext, useEffect } from 'react'
-import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator} from 'react-native'
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator
+} from 'react-native'
 import Modalize from 'react-native-modalize'
 import { Mutation } from 'react-apollo'
 import { showMessage as displayMessage } from 'react-native-flash-message'
@@ -10,35 +16,25 @@ import TrekkerCard from '../../components/TrekkerCard'
 import Store from '../../contexts/Store'
 import Geocoder from '../../utils/geocoder'
 
-
 const showMessage: any = displayMessage
-
 
 const TripActions = ({}) => {
   const context: any = useContext(Store)
   const {
-    locations: {
-      currentLocation,
-      destination,
-      currentAddress
-    },
-    trips: {
-      distance,
-      estimatedTime
-    },
+    locations: { currentLocation, destination, currentAddress },
+    trips: { distance, estimatedTime },
     setCurrentLocation,
     setTrip
   } = context
 
   useEffect(() => {
-    if(currentLocation && !currentAddress) {
-      Geocoder.from(currentLocation)
-        .then(json => {
-          const location = json.results[0].formatted_address
-          return setCurrentLocation({
-            currentAddress: location
-          })
+    if (currentLocation && !currentAddress) {
+      Geocoder.from(currentLocation).then(json => {
+        const location = json.results[0].formatted_address
+        return setCurrentLocation({
+          currentAddress: location
         })
+      })
     }
   }, [currentLocation])
 
@@ -50,7 +46,6 @@ const TripActions = ({}) => {
     >
       <Mutation mutation={CREATE_TRIP}>
         {(createTrip: Function, { data, loading, error }: any) => {
-
           return (
             <React.Fragment>
               {/* <Text style={styles.activeTrekkersTxt}>Active Trekkers near you</Text> */}
@@ -71,16 +66,20 @@ const TripActions = ({}) => {
                 <Text style={styles.tripDetailTitle}>
                   Destination:
                   {'  '}
-                  <Text style={styles.tripDetailValue}>{destination.formatted_address}</Text>
+                  <Text style={styles.tripDetailValue}>
+                    {destination.formatted_address}
+                  </Text>
                 </Text>
               )}
               {estimatedTime && (
                 <Text style={styles.tripDetailTitle}>
                   Estimated Time (by foot):
                   {'  '}
-                  <Text style={styles.tripDetailValue}>{Math.round((estimatedTime * 60)) * 100 / 100} min</Text>
+                  <Text style={styles.tripDetailValue}>
+                    {(Math.round(estimatedTime * 60) * 100) / 100} min
+                  </Text>
                 </Text>
-                )}
+              )}
               {distance && (
                 <Text style={styles.tripDetailTitle}>
                   Distance:
@@ -92,7 +91,9 @@ const TripActions = ({}) => {
               )}
               {destination && (
                 <React.Fragment>
-                  <Text style={styles.activeTrekkersTxt}>Active Trekkers near you</Text>
+                  <Text style={styles.activeTrekkersTxt}>
+                    Active Trekkers near you
+                  </Text>
                   <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     <TrekkerCard />
                   </ScrollView>
@@ -101,7 +102,9 @@ const TripActions = ({}) => {
               <TouchableOpacity
                 style={[
                   styles.btn,
-                  (!destination && !estimatedTime && !distance) && { backgroundColor: 'lightgrey' }
+                  !destination &&
+                    !estimatedTime &&
+                    !distance && { backgroundColor: 'lightgrey' }
                 ]}
                 activeOpacity={!destination ? 1 : 0.5}
                 onPress={() => {
@@ -115,30 +118,33 @@ const TripActions = ({}) => {
                       startLatitude: currentLocation.latitude,
                       startLongitude: currentLocation.longitude,
                       estimatedTime: estimatedTime,
-                      destinationAddress: destination.formatted_address,
+                      destinationAddress: destination.formatted_address
                     }
                   })
-                  .then(res => {
-                    showMessage({
-                      type: 'success',
-                      message: "Trip started successfully!",
-                      description: 'You never trek alone.'
+                    .then(res => {
+                      showMessage({
+                        type: 'success',
+                        message: 'Trip started successfully!',
+                        description: 'You never trek alone.'
+                      })
+                      return setTrip({
+                        currentTrip: res.data.createTrip.trip
+                      })
                     })
-                    return setTrip({
-                      currentTrip: res.data.createTrip.trip
-                    })
-                  })
-                  .catch(err => showMessage({
-                    type: 'danger',
-                    message: err.message,
-                    description: err.message
-                  }))
+                    .catch(err =>
+                      showMessage({
+                        type: 'danger',
+                        message: err.message,
+                        description: err.message
+                      })
+                    )
                 }}
               >
-                {loading
-                  ? <ActivityIndicator size="large" color="#ffffff" />
-                  : <Text style={styles.btnText}>Start Trip</Text>
-                }
+                {loading ? (
+                  <ActivityIndicator size="large" color="#ffffff" />
+                ) : (
+                  <Text style={styles.btnText}>Start Trip</Text>
+                )}
               </TouchableOpacity>
             </React.Fragment>
           )

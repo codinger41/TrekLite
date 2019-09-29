@@ -1,6 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { getHeight, getWidth } from '../../utils/style';
-
+import { StyleSheet } from 'react-native'
+import { getHeight, getWidth } from '../../utils/style'
 
 const styles = StyleSheet.create({
   container: {
@@ -26,7 +25,6 @@ const styles = StyleSheet.create({
     fontFamily: 'ubuntu',
     color: 'grey'
   }
-});
-
+})
 
 export default styles

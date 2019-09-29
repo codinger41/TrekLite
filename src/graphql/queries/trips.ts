@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 
 export const GET_ACTIVE_TRIP = gql`
   query getActiveTrip {
-    getUserActiveTrip{
+    getUserActiveTrip {
       id
       distance
       destinationAddress

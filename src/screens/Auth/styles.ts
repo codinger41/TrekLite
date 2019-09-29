@@ -1,6 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { getHeight, getWidth } from '../../utils/style';
-
+import { StyleSheet } from 'react-native'
+import { getHeight, getWidth } from '../../utils/style'
 
 const styles = StyleSheet.create({
   container: {
@@ -30,10 +29,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     height: getHeight(50),
     width: getWidth(300),
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 2
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -49,7 +48,6 @@ const styles = StyleSheet.create({
     marginLeft: getWidth(10),
     fontFamily: 'ubuntu'
   }
-});
-
+})
 
 export default styles

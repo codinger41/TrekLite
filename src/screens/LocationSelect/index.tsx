@@ -7,7 +7,6 @@ import { getHeight } from '../../utils/style'
 import Input from '../../components/Inputs'
 import Store from '../../contexts/Store'
 
-
 const SelectLocation = ({ navigation }: ScreenProp) => {
   const context: any = useContext(Store)
 
@@ -16,7 +15,7 @@ const SelectLocation = ({ navigation }: ScreenProp) => {
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#F03955" />
       <GooglePlacesAutocomplete
-        placeholder='Enter Location'
+        placeholder="Enter Location"
         minLength={2}
         autoFocus={false}
         currentLocation={false}
@@ -27,7 +26,7 @@ const SelectLocation = ({ navigation }: ScreenProp) => {
         fetchDetails={true}
         styles={{
           textInputContainer: {
-            backgroundColor: 'transparent',
+            backgroundColor: 'transparent'
           },
           textInput: {
             marginLeft: 0,
@@ -36,11 +35,11 @@ const SelectLocation = ({ navigation }: ScreenProp) => {
             color: '#5d5d5d',
             fontSize: getHeight(17),
             borderBottomColor: '#000',
-            borderBottomWidth: 0.4,
+            borderBottomWidth: 0.4
           },
           predefinedPlacesDescription: {
             color: '#1faadb'
-          },
+          }
         }}
         query={{
           // available options: https://developers.google.com/places/web-service/autocomplete
@@ -58,13 +57,16 @@ const SelectLocation = ({ navigation }: ScreenProp) => {
         onPress={() => {
           if (!locations.destination) return
 
-          const distance = haversine({
-            longitude: locations.currentLocation.longitude,
-            latitude: locations.currentLocation.latitude
-          }, {
-            longitude: locations.destination.geometry.location.lng,
-            latitude: locations.destination.geometry.location.lat
-          })
+          const distance = haversine(
+            {
+              longitude: locations.currentLocation.longitude,
+              latitude: locations.currentLocation.latitude
+            },
+            {
+              longitude: locations.destination.geometry.location.lng,
+              latitude: locations.destination.geometry.location.lat
+            }
+          )
 
           context.setTrip({
             distance,

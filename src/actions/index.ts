@@ -1,7 +1,10 @@
-import { setDestination, setCurrentLocation, setPassedCoordinates } from './locations'
+import {
+  setDestination,
+  setCurrentLocation,
+  setPassedCoordinates
+} from './locations'
 import { setTrip } from './trips'
 import { setTrekkers } from './trekkers'
-
 
 export default (dispatch: Function) => {
   return {

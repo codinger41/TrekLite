@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, TouchableOpacity, ActivityIndicator, AsyncStorage } from 'react-native'
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+  AsyncStorage
+} from 'react-native'
 import * as Google from 'expo-google-app-auth'
 import { Mutation } from 'react-apollo'
 import * as Animated from 'react-native-animatable'
@@ -9,7 +15,6 @@ import { showMessage } from 'react-native-flash-message'
 import styles from './styles'
 import { getHeight } from '../../utils/style'
 import { CREATE_USER_ACCOUNT } from '../../graphql/mutations/user'
-
 
 const Auth = ({ navigation }: ScreenProp) => {
   const [authLoading, setLoading] = useState(false)
@@ -23,14 +28,21 @@ const Auth = ({ navigation }: ScreenProp) => {
   })
 
   const completeAuth = (data: object) => {
-    const { createUser: { token, user: { id, fullname } } }: any = data
-    return AsyncStorage.setItem('token', token)
-      .then(() => AsyncStorage.setItem('user',
+    const {
+      createUser: {
+        token,
+        user: { id, fullname }
+      }
+    }: any = data
+    return AsyncStorage.setItem('token', token).then(() =>
+      AsyncStorage.setItem(
+        'user',
         JSON.stringify({
           id,
           fullname
         })
-      ))
+      )
+    )
   }
 
   const initializeGoogleLogin = async (createAccount: Function) => {
@@ -38,8 +50,10 @@ const Auth = ({ navigation }: ScreenProp) => {
     try {
       const { type, user }: any = await Google.logInAsync({
         clientId: '',
-        iosClientId: '246260706348-3eajibjmd6ue9qkrranlrgenvokci2ec.apps.googleusercontent.com',
-        androidClientId: '246260706348-asvt7a9304bdosbalm95js8bkdomkrtg.apps.googleusercontent.com',
+        iosClientId:
+          '246260706348-3eajibjmd6ue9qkrranlrgenvokci2ec.apps.googleusercontent.com',
+        androidClientId:
+          '246260706348-asvt7a9304bdosbalm95js8bkdomkrtg.apps.googleusercontent.com',
         scopes: ['profile', 'email']
       })
       setLoading(false)
@@ -51,18 +65,18 @@ const Auth = ({ navigation }: ScreenProp) => {
             profilePhoto: user.photoUrl
           }
         })
-        .then((res) => completeAuth(res.data))
-        .then(() => navigation.navigate('Home'))
-        .catch(error => {
-          showMessage({
-            message: {
-              message: 'Error!',
-              description: error.message
-            },
-            description: error.message,
-            type: 'danger',
-          });
-        })
+          .then(res => completeAuth(res.data))
+          .then(() => navigation.navigate('Home'))
+          .catch(error => {
+            showMessage({
+              message: {
+                message: 'Error!',
+                description: error.message
+              },
+              description: error.message,
+              type: 'danger'
+            })
+          })
       }
     } catch ({ message }) {
       setLoading(false)
@@ -71,8 +85,8 @@ const Auth = ({ navigation }: ScreenProp) => {
           message: 'Error!',
           description: message
         },
-        type: 'danger',
-      });
+        type: 'danger'
+      })
     }
   }
 
@@ -81,10 +95,7 @@ const Auth = ({ navigation }: ScreenProp) => {
       {(createUserAccount: Function, { data, loading, error }: any) => {
         return (
           <View style={styles.container}>
-            <Gradient
-              style={styles.top}
-              colors={['#6610f2', '#6f42c1']}
-            >
+            <Gradient style={styles.top} colors={['#6610f2', '#6f42c1']}>
               <Animated.Text
                 style={styles.logoTxt}
                 animation="slideInLeft"
@@ -98,7 +109,9 @@ const Auth = ({ navigation }: ScreenProp) => {
               style={styles.googlebtn}
               onPress={() => initializeGoogleLogin(createUserAccount)}
             >
-              {authLoading || loading ? <ActivityIndicator size="small" /> : (
+              {authLoading || loading ? (
+                <ActivityIndicator size="small" />
+              ) : (
                 <React.Fragment>
                   <AntDesign
                     name="google"

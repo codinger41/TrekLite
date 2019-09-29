@@ -1,6 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { getHeight, getWidth } from '../../utils/style';
-
+import { StyleSheet } from 'react-native'
+import { getHeight, getWidth } from '../../utils/style'
 
 const styles = StyleSheet.create({
   container: {
@@ -36,7 +35,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 2
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -84,12 +83,12 @@ const styles = StyleSheet.create({
     fontSize: getHeight(17),
     marginVertical: getHeight(10),
     fontFamily: 'ubuntu',
-    marginLeft: getWidth(20),
+    marginLeft: getWidth(20)
   },
   selectDestination: {
     fontSize: getHeight(15),
     fontFamily: 'ubuntu',
-    marginRight: getWidth(110),
+    marginRight: getWidth(110)
   },
   tripDetailTitle: {
     fontSize: getHeight(13),
@@ -109,10 +108,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     height: getHeight(55),
     width: getWidth(330),
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 2
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -125,7 +124,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: '#fff',
-    fontFamily: 'ubuntu',
+    fontFamily: 'ubuntu'
   },
   card: {
     width: getWidth(330),
@@ -135,10 +134,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     height: getHeight(200),
     alignSelf: 'center',
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 2
     },
     shadowOpacity: 0.27,
     shadowRadius: 1.65,
@@ -152,15 +151,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: getHeight(50),
     backgroundColor: '#ffffff',
-    shadowColor: "#000",
+    shadowColor: '#000',
     flexDirection: 'row',
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 1
     },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
-    elevation: 1,
+    elevation: 1
   },
   card3: {
     width: getWidth(145),
@@ -168,14 +167,14 @@ const styles = StyleSheet.create({
     height: getHeight(50),
     justifyContent: 'center',
     backgroundColor: '#ffffff',
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 1
     },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
-    elevation: 1,
+    elevation: 1
   },
   dot: {
     height: getWidth(7),
@@ -190,6 +189,5 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   }
 })
-
 
 export default styles

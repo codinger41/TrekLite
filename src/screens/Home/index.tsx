@@ -1,9 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Text, TouchableOpacity, StatusBar, ActivityIndicator, AsyncStorage, Platform } from 'react-native'
-import Map, { MarkerAnimated, PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StatusBar,
+  ActivityIndicator,
+  AsyncStorage,
+  Platform
+} from 'react-native'
+import Map, {
+  MarkerAnimated,
+  PROVIDER_GOOGLE,
+  Polyline
+} from 'react-native-maps'
 import { Query } from 'react-apollo'
 import { Entypo } from '@expo/vector-icons'
-import PubNub from 'pubnub'
 import MapViewDirections from 'react-native-maps-directions'
 import { showMessage as displayMessage } from 'react-native-flash-message'
 import styles from './styles'
@@ -16,7 +27,6 @@ import CurrentActiveTrip from '../../components/currentTrip'
 import pubnub from '../../utils/pubnub'
 
 const showMessage: any = displayMessage
-
 
 const getUserData = async () => {
   const user = await AsyncStorage.getItem('user')
@@ -33,14 +43,8 @@ const Home = ({ navigation }: ScreenProp) => {
       currentAddress,
       passedCoordinates
     },
-    trips: {
-      distance,
-      estimatedTime,
-      currentTrip
-    },
-    trekkers: {
-      activeTrekkers
-    },
+    trips: { distance, estimatedTime, currentTrip },
+    trekkers: { activeTrekkers },
     setCurrentLocation,
     setTrip,
     setTrekkers
@@ -52,17 +56,16 @@ const Home = ({ navigation }: ScreenProp) => {
         // console.log({ statusEvent })
       },
       message: function({ message }) {
-        getUserData()
-          .then((data) => {
-            if (message.id === data.id) return
-            return setTrekkers(message)
-          })
+        getUserData().then(data => {
+          if (message.id === data.id) return
+          return setTrekkers(message)
+        })
       }
     })
     pubnub.subscribe({
       channels: ['trekkers']
     })
-    
+
     navigator.geolocation.getCurrentPosition(({ coords }) => {
       setCurrentLocation({
         currentLocation: {
@@ -72,125 +75,143 @@ const Home = ({ navigation }: ScreenProp) => {
       })
     })
 
-    setInterval(() => {
+    const interval = setInterval(() => {
       navigator.geolocation.getCurrentPosition(({ coords }) => {
-        getUserData()
-          .then((data) => {
-            const message = {
-              ...data,
-              ...coords
-            }
-            pubnub.publish({
-              message,
-              channel: 'trekkers'
-            })
+        getUserData().then(data => {
+          const message = {
+            ...data,
+            ...coords,
+            isTrekking: currentTrip ? true : false
+          }
+          pubnub.publish({
+            message,
+            channel: 'trekkers'
           })
+        })
       })
-    }, 5000);
+    }, 5000)
 
-    // navigator.geolocation.watchPosition(position => {
-    //   const { latitude, longitude } = position.coords;
-    //   setPassedCoordinates({
-    //     longitude,
-    //     latitude
-    //   })
-    // })
     return () => {
       pubnub.removeListener()
+      clearInterval(interval)
     }
   }, [destination])
 
-
-  const currentLocationDelta = currentLocation && getDelta(currentLocation.latitude, currentLocation.longitude, 1000)
-  const destinationDelta = destination && getDelta(
-    destination.geometry.location.lat,
-    destination.geometry.location.lng,
-    distance
-  )
+  const currentLocationDelta =
+    currentLocation &&
+    getDelta(currentLocation.latitude, currentLocation.longitude, 1000)
+  const destinationDelta =
+    destination &&
+    getDelta(
+      destination.geometry.location.lat,
+      destination.geometry.location.lng,
+      distance
+    )
 
   return (
     <View style={styles.container}>
-      <Query
-        query={GET_ACTIVE_TRIP}
-        fetchPolicy="network-only"
-      >
-      {({ data, loading, error }: any) => {
+      <Query query={GET_ACTIVE_TRIP} fetchPolicy="network-only">
+        {({ data, loading, error }: any) => {
+          if (loading)
+            return (
+              <ActivityIndicator
+                color="#000"
+                style={styles.activityIndicator}
+              />
+            )
 
-        if(loading) return <ActivityIndicator color="#000" style={styles.activityIndicator}  />
-
-        if(!error && data.getUserActiveTrip && !currentTrip) {
-          if(data.getUserActiveTrip.status !== 'ended') {
-            setTrip({
-              currentTrip: data.getUserActiveTrip
+          if (!error && data.getUserActiveTrip && !currentTrip) {
+            if (data.getUserActiveTrip.status !== 'ended') {
+              setTrip({
+                currentTrip: data.getUserActiveTrip
+              })
+            }
+          }
+          if (error) {
+            showMessage({
+              type: 'danger',
+              message: 'Network Error!',
+              description: 'Please check your internet connection',
+              duration: 5000
             })
           }
-        }
-        if(error) {
-          showMessage({
-            type: 'danger',
-            message: 'Network Error!',
-            description: 'Please check your internet connection',
-            duration: 5000
-          })
-        }
-        return (
-          <React.Fragment>
-            <StatusBar barStyle="dark-content" backgroundColor="#F03955" />
-            <Map 
-              style={styles.container}
-              provider={PROVIDER_GOOGLE}
-              initialRegion={currentLocation && currentLocationDelta && {
-                latitude: currentLocation.latitude,
-                longitude: currentLocation.longitude,
-                longitudeDelta: currentLocationDelta.longitudeDelta,
-                latitudeDelta: currentLocationDelta.latitudeDelta,
-              }}
-            >
-              <Polyline coordinates={passedCoordinates} strokeWidth={2} />
-              {destination && (
-                <MarkerAnimated
-                  coordinate={{
-                    latitude: destination.geometry.location.lat,
-                    longitude: destination.geometry.location.lng,
-                  }}
-                  title={destination.formatted_address}
-                />
-              )}
-              {activeTrekkers && activeTrekkers.map(trekker => {
-                return (
+          return (
+            <React.Fragment>
+              <StatusBar barStyle="dark-content" backgroundColor="#F03955" />
+              <Map
+                style={styles.container}
+                provider={PROVIDER_GOOGLE}
+                initialRegion={
+                  currentLocation &&
+                  currentLocationDelta && {
+                    latitude: currentLocation.latitude,
+                    longitude: currentLocation.longitude,
+                    longitudeDelta: currentLocationDelta.longitudeDelta,
+                    latitudeDelta: currentLocationDelta.latitudeDelta
+                  }
+                }
+              >
+                <Polyline coordinates={passedCoordinates} strokeWidth={2} />
+                {(destination || currentTrip) && (
                   <MarkerAnimated
-                    key={trekker.id}
-                    coordinate={{
-                      latitude: trekker.latitude,
-                      longitude: trekker.longitude,
-                    }}
-                    title={trekker.fullname}
-                    pinColor="blue"
+                    coordinate={
+                      destination
+                        ? {
+                            latitude: destination.geometry.location.lat,
+                            longitude: destination.geometry.location.lng
+                          }
+                        : {
+                            latitude: currentTrip.destinationLatitude,
+                            longitude: currentTrip.destinationLongitude
+                          }
+                    }
+                    title={
+                      destination
+                        ? destination.formatted_address
+                        : currentTrip.destinationAddress
+                    }
+                    pinColor="#6610f2"
                   />
-                )
-              })}
-              {currentLocation && (
-                <MarkerAnimated
-                  coordinate={currentLocation}
-                  title='Your current location'
-                  pinColor="red"
-                />
-              )}
-              {(destination || currentTrip) && (
-                <MapViewDirections
-                  origin={currentLocation}
-                  mode="WALKING"
-                  strokeWidth={5}
-                  destination={
-                    destination ? {
-                      latitude: destination.geometry.location.lat,
-                      longitude: destination.geometry.location.lng,
-                    } : {
-                      latitude: currentTrip.destinationLatitude,
-                      longitude: currentTrip.destinationLongitude
-                  }}
-                  apikey={"AIzaSyCH6YIv4oA88bUTscQJZd1KqAml9pza4uw"}
-                />
+                )}
+                {activeTrekkers &&
+                  activeTrekkers.map(trekker => {
+                    return (
+                      <MarkerAnimated
+                        key={trekker.id}
+                        coordinate={{
+                          latitude: trekker.latitude,
+                          longitude: trekker.longitude
+                        }}
+                        title={trekker.fullname}
+                        pinColor="blue"
+                      />
+                    )
+                  })}
+                {currentLocation && (
+                  <MarkerAnimated
+                    coordinate={currentLocation}
+                    title="Your current location"
+                    pinColor="red"
+                  />
+                )}
+                {(destination || currentTrip) && (
+                  <MapViewDirections
+                    origin={currentLocation}
+                    mode="WALKING"
+                    strokeWidth={5}
+                    destination={
+                      destination
+                        ? {
+                            latitude: destination.geometry.location.lat,
+                            longitude: destination.geometry.location.lng
+                          }
+                        : {
+                            latitude: currentTrip.destinationLatitude,
+                            longitude: currentTrip.destinationLongitude
+                          }
+                    }
+                    apikey={'AIzaSyCH6YIv4oA88bUTscQJZd1KqAml9pza4uw'}
+                  />
                 )}
               </Map>
               {!currentTrip && (
@@ -199,19 +220,23 @@ const Home = ({ navigation }: ScreenProp) => {
                     style={styles.locations}
                     onPress={() => navigation.navigate('LocationSelect')}
                   >
-                    <Entypo name="location" size={getHeight(25)} color="#F03955" />
-                    <Text style={styles.selectDestination}>Select Destination</Text>
+                    <Entypo
+                      name="location"
+                      size={getHeight(25)}
+                      color="#F03955"
+                    />
+                    <Text style={styles.selectDestination}>
+                      Select Destination
+                    </Text>
                   </TouchableOpacity>
                   <TripActions />
                 </React.Fragment>
               )}
-              {currentTrip && (
-                <CurrentActiveTrip />
-              )}
+              {currentTrip && <CurrentActiveTrip />}
             </React.Fragment>
-            )
-          }}
-        </Query>
+          )
+        }}
+      </Query>
     </View>
   )
 }

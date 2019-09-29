@@ -12,16 +12,17 @@ interface InputProps {
 const Input = ({ placeholder }: InputProps) => {
   return (
     <GooglePlacesAutocomplete
-      placeholder='Enter Location'
+      placeholder="Enter Location"
       minLength={2}
       autoFocus={false}
-      onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
+      onPress={(data, details = null) => {
+        // 'details' is provided when fetchDetails = true
       }}
       returnKeyType={'default'}
       fetchDetails={true}
       styles={{
         textInputContainer: {
-          backgroundColor: 'transparent',
+          backgroundColor: 'transparent'
         },
         textInput: {
           marginLeft: 0,
@@ -30,11 +31,11 @@ const Input = ({ placeholder }: InputProps) => {
           color: '#5d5d5d',
           fontSize: getHeight(17),
           borderBottomColor: '#000',
-          borderBottomWidth: 0.4,
+          borderBottomWidth: 0.4
         },
         predefinedPlacesDescription: {
           color: '#1faadb'
-        },
+        }
       }}
       currentLocation={false}
       query={{
@@ -48,4 +49,4 @@ const Input = ({ placeholder }: InputProps) => {
 }
 
 export default Input
- // AIzaSyCH6YIv4oA88bUTscQJZd1KqAml9pza4uw
+// AIzaSyCH6YIv4oA88bUTscQJZd1KqAml9pza4uw

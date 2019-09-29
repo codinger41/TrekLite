@@ -4,26 +4,31 @@ import Auth from './screens/Auth'
 import Home from './screens/Home'
 import LocationSelect from './screens/LocationSelect'
 
-export default createAppContainer(createStackNavigator({
-  Auth: {
-    screen: Auth,
-    navigationOptions: {
-      header: null
+export default createAppContainer(
+  createStackNavigator(
+    {
+      Auth: {
+        screen: Auth,
+        navigationOptions: {
+          header: null
+        }
+      },
+      Home: {
+        screen: Home,
+        navigationOptions: {
+          header: null
+        }
+      },
+      LocationSelect: {
+        screen: LocationSelect,
+        navigationOptions: {
+          title: 'Select Destination'
+        }
+      }
+    },
+    {
+      // headerMode: 'none',
+      // initialRouteName: 'Home'
     }
-  },
-  Home: {
-    screen: Home,
-    navigationOptions: {
-      header: null,
-    }
-  },
-  LocationSelect: {
-    screen: LocationSelect,
-    navigationOptions: {
-      title: 'Select Destination'
-    }
-  },
-}, {
-  // headerMode: 'none',
-  // initialRouteName: 'Home'
-}));
+  )
+)

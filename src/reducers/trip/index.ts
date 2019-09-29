@@ -1,6 +1,5 @@
 import initialState from '../initialState'
 
-
 type actionType = {
   type: string
   payload: any

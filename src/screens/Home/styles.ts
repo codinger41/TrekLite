@@ -1,11 +1,10 @@
-import { StyleSheet } from 'react-native';
-import { getHeight, getWidth } from '../../utils/style';
-
+import { StyleSheet } from 'react-native'
+import { getHeight, getWidth } from '../../utils/style'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   top: {
     backgroundColor: '#F03955',
@@ -36,7 +35,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 2
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -61,7 +60,7 @@ const styles = StyleSheet.create({
     height: getHeight(40),
     alignItems: 'center',
     width: getWidth(270),
-    marginBottom: getHeight(15),
+    marginBottom: getHeight(15)
     // justifyContent: 'space-between'
   },
   input: {
@@ -91,12 +90,12 @@ const styles = StyleSheet.create({
     fontSize: getHeight(15),
     marginVertical: getHeight(10),
     fontFamily: 'ubuntu',
-    marginLeft: getWidth(20),
+    marginLeft: getWidth(20)
   },
   selectDestination: {
     fontSize: getHeight(15),
     fontFamily: 'ubuntu',
-    marginRight: getWidth(110),
+    marginRight: getWidth(110)
   },
   tripDetailValue: {
     fontSize: getHeight(13),
@@ -116,10 +115,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#F03955',
     height: getHeight(55),
     width: getWidth(330),
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 2
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -132,7 +131,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: '#fff',
-    fontFamily: 'ubuntu',
+    fontFamily: 'ubuntu'
   },
   activityIndicator: {
     position: 'absolute',
@@ -141,7 +140,6 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0
   }
-});
-
+})
 
 export default styles
