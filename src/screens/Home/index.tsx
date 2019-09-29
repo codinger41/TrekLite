@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Text, TouchableOpacity, StatusBar, ActivityIndicator, AsyncStorage } from 'react-native'
+import { View, Text, TouchableOpacity, StatusBar, ActivityIndicator, AsyncStorage, Platform } from 'react-native'
 import Map, { MarkerAnimated, PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
 import { Query } from 'react-apollo'
 import { Entypo } from '@expo/vector-icons'
@@ -13,7 +13,7 @@ import Store from '../../contexts/Store'
 import { getDelta } from '../../utils/helpers'
 import TripActions from '../../components/TripActions'
 import CurrentActiveTrip from '../../components/currentTrip'
-
+import pubnub from '../../utils/pubnub'
 
 const showMessage: any = displayMessage
 
@@ -24,14 +24,7 @@ const getUserData = async () => {
 }
 
 const Home = ({ navigation }: ScreenProp) => {
-
-  const pubnub = new PubNub({
-    publishKey: 'pub-c-eb5c4104-ca7a-4538-b17f-b8b5b2924166',
-    subscribeKey: 'sub-c-3fa20908-e29e-11e9-89da-5a5bbf30aaae'
-  })
-
   const context: any = useContext(Store)
-  const [response, setResponse] = useState(0)
 
   const {
     locations: {
@@ -45,41 +38,55 @@ const Home = ({ navigation }: ScreenProp) => {
       estimatedTime,
       currentTrip
     },
+    trekkers: {
+      activeTrekkers
+    },
     setCurrentLocation,
-    setTrip
+    setTrip,
+    setTrekkers
   } = context
 
   useEffect(() => {
-    
-
-    navigator.geolocation.getCurrentPosition((position) => {
-      setCurrentLocation({
-        currentLocation: {
-          longitude: position.coords.longitude,
-          latitude: position.coords.latitude
-        }
-      })
-    })
     pubnub.addListener({
       status: function(statusEvent) {
-        console.log({ statusEvent })
+        // console.log({ statusEvent })
       },
       message: function({ message }) {
-        console.log({ message })
+        getUserData()
+          .then((data) => {
+            if (message.id === data.id) return
+            return setTrekkers(message)
+          })
       }
     })
     pubnub.subscribe({
       channels: ['trekkers']
     })
-
-    getUserData()
-      .then((data) => {
-        console.log(data)
-        pubnub.publish({
-          message: data,
-          channel: 'trekkers'
-        })
+    
+    navigator.geolocation.getCurrentPosition(({ coords }) => {
+      setCurrentLocation({
+        currentLocation: {
+          longitude: coords.longitude,
+          latitude: coords.latitude
+        }
       })
+    })
+
+    setInterval(() => {
+      navigator.geolocation.getCurrentPosition(({ coords }) => {
+        getUserData()
+          .then((data) => {
+            const message = {
+              ...data,
+              ...coords
+            }
+            pubnub.publish({
+              message,
+              channel: 'trekkers'
+            })
+          })
+      })
+    }, 5000);
 
     // navigator.geolocation.watchPosition(position => {
     //   const { latitude, longitude } = position.coords;
@@ -138,12 +145,6 @@ const Home = ({ navigation }: ScreenProp) => {
                 longitudeDelta: currentLocationDelta.longitudeDelta,
                 latitudeDelta: currentLocationDelta.latitudeDelta,
               }}
-              region={currentLocation && currentLocationDelta && {
-                latitude: currentLocation.latitude,
-                longitude: currentLocation.longitude,
-                longitudeDelta: currentLocationDelta.longitudeDelta,
-                latitudeDelta: currentLocationDelta.latitudeDelta,
-              }}
             >
               <Polyline coordinates={passedCoordinates} strokeWidth={2} />
               {destination && (
@@ -155,10 +156,24 @@ const Home = ({ navigation }: ScreenProp) => {
                   title={destination.formatted_address}
                 />
               )}
+              {activeTrekkers && activeTrekkers.map(trekker => {
+                return (
+                  <MarkerAnimated
+                    key={trekker.id}
+                    coordinate={{
+                      latitude: trekker.latitude,
+                      longitude: trekker.longitude,
+                    }}
+                    title={trekker.fullname}
+                    pinColor="blue"
+                  />
+                )
+              })}
               {currentLocation && (
                 <MarkerAnimated
                   coordinate={currentLocation}
                   title='Your current location'
+                  pinColor="red"
                 />
               )}
               {(destination || currentTrip) && (

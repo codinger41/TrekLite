@@ -1,5 +1,7 @@
 import locations from './locations'
 import trips from './trip'
+import trekkers from './trekkers'
+
 
 const combineReducers = reducers => {
   return (state = {}, action) =>
@@ -14,7 +16,8 @@ const combineReducers = reducers => {
 
 const combined = combineReducers({
   locations,
-  trips
+  trips,
+  trekkers
 })
 
 export default combined

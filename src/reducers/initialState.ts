@@ -10,6 +10,9 @@ const initialState: object = {
     estimatedTime: null,
     started: false,
     currentTrip: null
+  },
+  trekkers: {
+    activeTrekkers: []
   }
 }
 
