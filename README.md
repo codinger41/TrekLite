@@ -3,7 +3,9 @@ Group Trekkers App <br/>
 
 
 **Live app is here :** https://expo.io/@leksyib/treklite <br/>
-**Video Demo :** https://www.youtube.com/watch?v=aVYqS45Lg4A
+**Video Demo :** https://www.youtube.com/watch?v=aVYqS45Lg4A <br />
+**Backend :** https://github.com/codinger41/treklite-backend
+
 
 ## Screenshots
 <img src="https://user-images.githubusercontent.com/26174035/66041226-4d900680-e511-11e9-9e81-14214558a644.png" width="425"/> <img src="https://user-images.githubusercontent.com/26174035/66041321-816b2c00-e511-11e9-8298-6ba7b88144e3.png" width="425"/>  <br/>
@@ -52,3 +54,8 @@ If you have to bypass lint for a special commit that you will come back and clea
 **Understanding Linting Errors**
 
 The linting rules are from JS prettier-standard.  [Regular JS errors can be found with descriptions here](http://eslint.org/docs/rules/), while [React errors and descriptions can be found here](https://github.com/yannickcr/eslint-plugin-react).
+
+
+**Remaining Features**
+ - When a user has accepted a request to trek with another user, route the user to the host's location first then initialize the trip on the other users' device.
+
