@@ -43,7 +43,7 @@ const SelectLocation = ({ navigation }: ScreenProp) => {
         }}
         query={{
           // available options: https://developers.google.com/places/web-service/autocomplete
-          key: 'AIzaSyCH6YIv4oA88bUTscQJZd1KqAml9pza4uw',
+          key: '<INSERT GOOGLE PLACES API KEY>',
           language: 'en',
           types: 'address'
         }}
