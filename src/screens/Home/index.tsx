@@ -210,7 +210,7 @@ const Home = ({ navigation }: ScreenProp) => {
                             longitude: currentTrip.destinationLongitude
                           }
                     }
-                    apikey={'AIzaSyCH6YIv4oA88bUTscQJZd1KqAml9pza4uw'}
+                    apikey={'<INSERT PLACES API KEY>'}
                   />
                 )}
               </Map>
