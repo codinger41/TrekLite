@@ -1,6 +1,16 @@
 # TrekLite
-Group Trekkers App <br/>
+Group Trekkers App. It's basically an App that users can use to organize group trekking trips. <br/>
 
+
+## Features-
+- Authentication: Users can sign in with Google.
+- Users can select destination locations to start trips
+- Users can see other online users that are actively looking for people to trek with in real-time.
+- Users can send trek requests to other active users.
+- When a trek request is sent to a user, the user sees an alert box to either accept or reject the request. If the user accepts it, the user joins the host on that trekking trip. If the user rejects it, the host gets a notification that the request was rejected.
+- Live Tracking- Users' locations are live-tracked in real-time.
+- Users can end trips when they get to their destination.
+- Users can continue trips if they close the app and open it again.
 
 **Live app is here :** https://expo.io/@leksyib/treklite <br/>
 **Video Demo :** https://www.youtube.com/watch?v=aVYqS45Lg4A <br />
@@ -28,6 +38,8 @@ Group Trekkers App <br/>
 **Step 5:** Follow <a href="https://github.com/expo/expo/blob/master/docs/pages/versions/unversioned/sdk/google.md">These steps<a /> to setup your Google authentication client.
 
 **Step 6:** Insert the neccessary client IDs in `/src/screens/Auth/index.tsx`, from line 54.
+
+**Step 7:** Create a Pubnub account and nsert the neccessary keys in `/src/utils/pubnub.ts`.
 
 ## :arrow_forward: How to Run App
 
